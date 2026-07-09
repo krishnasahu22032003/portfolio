@@ -11,7 +11,7 @@ export function ThemeToggle() {
   React.useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="h-8 w-8" aria-hidden="true" />;
+    return <div className="h-7 w-[3.25rem] rounded-full" aria-hidden="true" />;
   }
 
   const isDark = resolvedTheme === "dark";
@@ -24,38 +24,58 @@ export function ThemeToggle() {
       aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className="
-        group relative inline-flex h-8 w-8 cursor-pointer items-center justify-center
-        rounded-full border border-neutral-300 bg-transparent
-        text-neutral-700
-        transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
-        hover:scale-110 hover:border-neutral-900 hover:text-neutral-900
-        active:scale-95 active:duration-300
-        focus-visible:outline-none focus-visible:ring-1
-        focus-visible:ring-neutral-400 focus-visible:ring-offset-2
-        focus-visible:ring-offset-white
-        dark:border-neutral-700 dark:text-neutral-300
-        dark:hover:border-neutral-50 dark:hover:text-neutral-50
-        dark:focus-visible:ring-neutral-600 dark:focus-visible:ring-offset-neutral-950
+        group relative inline-flex h-7 w-[3.25rem] shrink-0 cursor-pointer items-center
+        rounded-full border border-border bg-secondary
+        skill-inner-shadow
+        transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+        hover:border-accent/40
+        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring
+        focus-visible:ring-offset-2 focus-visible:ring-offset-background
+        active:duration-200
       "
     >
-      <Sun
-        strokeWidth={1.5}
-        className={`
-          absolute h-[16px] w-[16px]
-          transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
-          motion-reduce:transition-none
-          ${isDark ? "-rotate-180 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}
-        `}
+      <span
+        className="
+          pointer-events-none absolute inset-0 rounded-full opacity-0
+          transition-opacity duration-500 ease-out
+          group-hover:opacity-100
+        "
+        style={{
+          background:
+            "radial-gradient(circle at 50% 50%, var(--accent) 0%, transparent 70%)",
+          opacity: isDark ? undefined : undefined,
+        }}
       />
-      <Moon
-        strokeWidth={1.5}
+
+      <span
         className={`
-          absolute h-[16px] w-[16px]
-          transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]
-          motion-reduce:transition-none
-          ${isDark ? "rotate-0 scale-100 opacity-100" : "rotate-180 scale-0 opacity-0"}
+          relative flex h-5.5 w-5.5 items-center justify-center rounded-full
+          border border-border bg-card
+          shadow-sm
+          transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+          group-active:scale-90
+          ${isDark ? "translate-x-[calc(3.25rem-1.625rem-4px)]" : "translate-x-[3px]"}
         `}
-      />
+      >
+        <Sun
+          strokeWidth={1.5}
+          className={`
+            absolute h-3.5 w-3.5 text-accent
+            transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+            motion-reduce:transition-none
+            ${isDark ? "-rotate-90 scale-0 opacity-0" : "rotate-0 scale-100 opacity-100"}
+          `}
+        />
+        <Moon
+          strokeWidth={1.5}
+          className={`
+            absolute h-3.5 w-3.5 text-accent
+            transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]
+            motion-reduce:transition-none
+            ${isDark ? "rotate-0 scale-100 opacity-100" : "rotate-90 scale-0 opacity-0"}
+          `}
+        />
+      </span>
     </button>
   );
 }
