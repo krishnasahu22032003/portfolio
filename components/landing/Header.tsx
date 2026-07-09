@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { ThemeToggle } from "../ui/theme-toggle"
+import { MusicToggle } from "../ui/MusicToggle"
 
 const links = [
   { href: "/", label: "Home" },
@@ -84,7 +85,10 @@ const Header = () => {
           />
         </button>
 
-        <ThemeToggle />
+        <div className="flex items-center gap-1">
+          <MusicToggle />
+          <ThemeToggle />
+        </div>
       </nav>
 
       <div

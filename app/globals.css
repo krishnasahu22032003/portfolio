@@ -257,3 +257,12 @@
 .prose h4 {
   font-size: calc(var(--blog-font-size) * 1.2);
 }
+
+@keyframes eqBar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
