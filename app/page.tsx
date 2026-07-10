@@ -2,6 +2,7 @@ import About from "@/components/landing/AboutSection";
 import Experience from "@/components/landing/ExperienceSection";
 import Hero from "@/components/landing/Hero";
 import Stack from "@/components/landing/StackSection";
+import ProjectsGrid from "@/components/ui/ProjectGrid";
 
 
 export default function Home() {
@@ -11,6 +12,7 @@ export default function Home() {
 <About/>
 <Stack/>
 <Experience/>
+<ProjectsGrid/>
     </main>
   );
 }
