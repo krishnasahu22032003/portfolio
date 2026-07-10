@@ -3,7 +3,8 @@ import { Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import Header from "@/components/landing/Header";
-import Quotes from "@/components/landing/QuotesSection";
+import Quotes from "@/components/ui/QuotesSection";
+import Footer from "@/components/ui/Footer";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -92,8 +93,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-body">
         <ThemeProvider>
          <Header/>
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 px-4">{children}</main>
           <Quotes/>
+          <Footer/>
         </ThemeProvider>
       </body>
     </html>
