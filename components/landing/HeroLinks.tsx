@@ -47,7 +47,7 @@ const HeroLinks = () => {
       variants={container}
       initial="hidden"
       animate="show"
-      className="flex items-center justify-center gap-5 sm:gap-6"
+      className="flex items-center justify-center gap-2 sm:gap-2"
     >
       {links.map(({ label, href, icon: Icon }) => (
         <motion.div key={label} variants={item} className="group relative flex flex-col items-center">
