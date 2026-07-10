@@ -90,7 +90,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-body">
         <ThemeProvider>
-          <Header />
+         <Header/>
           <main className="flex-1">{children}</main>
         </ThemeProvider>
       </body>

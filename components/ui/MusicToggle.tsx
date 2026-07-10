@@ -78,23 +78,32 @@ export function MusicToggle() {
         <span
           className="w-[3px] rounded-full bg-foreground"
           style={{
-            animation: isPlaying ? "eqBar 0.9s ease-in-out infinite" : "none",
-            animationDelay: "0ms",
-          }}
+    animationName: isPlaying ? "eqBar" : "none",
+    animationDuration: "0.9s",
+    animationTimingFunction: "ease-in-out",
+    animationIterationCount: "infinite",
+    animationDelay: "0ms",
+  }}
         />
         <span
           className="w-[3px] rounded-full bg-foreground"
           style={{
-            animation: isPlaying ? "eqBar 0.9s ease-in-out infinite" : "none",
-            animationDelay: "180ms",
-          }}
+  animationName: isPlaying ? "eqBar" : "none",
+  animationDuration: "0.9s",
+  animationTimingFunction: "ease-in-out",
+  animationIterationCount: "infinite",
+  animationDelay: "180ms",
+}}
         />
         <span
           className="w-[3px] rounded-full bg-foreground"
           style={{
-            animation: isPlaying ? "eqBar 0.9s ease-in-out infinite" : "none",
-            animationDelay: "90ms",
-          }}
+    animationName: isPlaying ? "eqBar" : "none",
+    animationDuration: "0.9s",
+    animationTimingFunction: "ease-in-out",
+    animationIterationCount: "infinite",
+    animationDelay: "90ms",
+  }}
         />
       </span>
     </button>
