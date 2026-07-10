@@ -1,5 +1,5 @@
 import About from "@/components/landing/AboutSection";
-import Header from "@/components/landing/Header";
+import Experience from "@/components/landing/ExperienceSection";
 import Hero from "@/components/landing/Hero";
 import Stack from "@/components/landing/StackSection";
 
@@ -10,6 +10,7 @@ export default function Home() {
 <Hero/>
 <About/>
 <Stack/>
+<Experience/>
     </main>
   );
 }

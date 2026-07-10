@@ -9,7 +9,6 @@ const stack = [
     items: [
       { name: "TypeScript", href: "https://www.typescriptlang.org" },
       { name: "JavaScript", href: "https://developer.mozilla.org/en-US/docs/Web/JavaScript" },
-      { name: "Python", href: "https://www.python.org" },
       { name: "SQL", href: "https://en.wikipedia.org/wiki/SQL" },
     ],
   },
@@ -147,7 +146,7 @@ const itemVariant = {
 
 const Stack = () => {
   return (
-    <section className="container mx-auto max-w-2xl py-10">
+    <section className="container mx-auto max-w-2xl py-12">
       <motion.h2
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
