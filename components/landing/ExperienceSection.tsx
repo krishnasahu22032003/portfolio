@@ -81,7 +81,7 @@ const Experience = () => {
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col gap-0.5">
               <span className="text-[15px] font-semibold tracking-tight text-foreground">
-                Inlighn Global
+                InlighnX Global
               </span>
               <span className="text-[12px] text-muted-foreground">
                 Inlighn Tech
