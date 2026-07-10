@@ -1,6 +1,7 @@
 "use client"
 
 import { TextReveal } from "@/components/ui/text-reveal"
+import HeroLinks from "./HeroLinks"
 
 const quote = "Building the future."
 const name = "Krishna Sahu"
@@ -23,7 +24,7 @@ const Hero = () => {
             className="h-full w-full object-cover"
           />
         </div>
-
+<HeroLinks/>
         <div className="flex flex-col gap-1.5">
           <h3 className="font-serif text-xl font-semibold leading-none tracking-tight text-foreground sm:text-2xl">
             <TextReveal text={name} delay={150} />
