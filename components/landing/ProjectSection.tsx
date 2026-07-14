@@ -4,72 +4,8 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
 import { ProjectCard } from "../ui/ProjectCard"
-
-const fullstackProjects = [
-  {
-    title: "Devflow",
-    description:
-      "A real-time collaborative platform for engineering teams to plan sprints, track issues, and ship faster with less overhead.",
-    image: "/projects/devflow.png",
-    github: "https://github.com/krishnasahu/devflow",
-    live: "https://devflow.app",
-    stack: ["Next.js", "TypeScript", "Postgres", "Redis"],
-    category: "fullstack",
-  },
-  {
-    title: "Nimbus AI",
-    description:
-      "An AI-powered workflow automation tool built on LangGraph and RAG, letting teams query internal docs conversationally.",
-    image: "/projects/nimbus.png",
-    github: "https://github.com/krishnasahu/nimbus-ai",
-    live: "https://nimbus-ai.dev",
-    stack: ["LangChain", "OpenAI", "Vector DB", "Node.js"],
-    category: "fullstack",
-  },
-  {
-    title: "Ledger",
-    description:
-      "An event-driven expense tracking backend with Kafka-based ingestion and async reconciliation jobs.",
-    image: "/projects/ledger.png",
-    github: "https://github.com/krishnasahu/ledger",
-    live: "https://ledger-app.dev",
-    stack: ["Node.js", "Kafka", "MongoDB", "Docker"],
-    category: "fullstack",
-  },
-]
-
-const frontendProjects = [
-  {
-    title: "Portfolio OS",
-    description:
-      "A component-driven personal site with theme-aware animation primitives, built to be extended into a full design system.",
-    image: "/projects/portfolio.png",
-    github: "https://github.com/krishnasahu/portfolio-os",
-    live: "https://krishnasahu.dev",
-    stack: ["React", "Tailwind", "Framer Motion"],
-    category: "frontend",
-  },
-  {
-    title: "Pulse Dashboard",
-    description:
-      "A metrics dashboard with animated charts and live data polling, focused on clarity and fast perceived performance.",
-    image: "/projects/pulse.png",
-    github: "https://github.com/krishnasahu/pulse-dashboard",
-    live: "https://pulse-dash.app",
-    stack: ["React", "Recharts", "TanStack Query"],
-    category: "frontend",
-  },
-  {
-    title: "Motion Kit",
-    description:
-      "A small library of reusable, accessible animation primitives for React, built on top of Framer Motion.",
-    image: "/projects/motionkit.png",
-    github: "https://github.com/krishnasahu/motion-kit",
-    live: "https://motion-kit.dev",
-    stack: ["React", "TypeScript", "Framer Motion"],
-    category: "frontend",
-  },
-]
+import { fullstackProjects } from "@/lib/FullstackProjects"
+import { frontendProjects } from "@/lib/FrontendProjects"
 
 const tabs = [
   { label: "Full Stack", value: "fullstack" },
