@@ -3,9 +3,9 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { ProjectCard } from "./ProjectCard"
+import { ProjectCard } from "../ui/ProjectCard"
 
-const projects = [
+const fullstackProjects = [
   {
     title: "Devflow",
     description:
@@ -27,6 +27,19 @@ const projects = [
     category: "fullstack",
   },
   {
+    title: "Ledger",
+    description:
+      "An event-driven expense tracking backend with Kafka-based ingestion and async reconciliation jobs.",
+    image: "/projects/ledger.png",
+    github: "https://github.com/krishnasahu/ledger",
+    live: "https://ledger-app.dev",
+    stack: ["Node.js", "Kafka", "MongoDB", "Docker"],
+    category: "fullstack",
+  },
+]
+
+const frontendProjects = [
+  {
     title: "Portfolio OS",
     description:
       "A component-driven personal site with theme-aware animation primitives, built to be extended into a full design system.",
@@ -45,16 +58,6 @@ const projects = [
     live: "https://pulse-dash.app",
     stack: ["React", "Recharts", "TanStack Query"],
     category: "frontend",
-  },
-  {
-    title: "Ledger",
-    description:
-      "An event-driven expense tracking backend with Kafka-based ingestion and async reconciliation jobs.",
-    image: "/projects/ledger.png",
-    github: "https://github.com/krishnasahu/ledger",
-    live: "https://ledger-app.dev",
-    stack: ["Node.js", "Kafka", "MongoDB", "Docker"],
-    category: "fullstack",
   },
   {
     title: "Motion Kit",
@@ -83,19 +86,20 @@ const container = {
 const Projects = () => {
   const [active, setActive] = useState("fullstack")
 
-  const filtered = projects
-    .filter((project) => project.category === active)
-    .slice(0, 4)
+  const filtered =
+    active === "fullstack"
+      ? fullstackProjects.slice(0, 4)
+      : frontendProjects.slice(0, 4)
 
   return (
-    <section className="container mx-auto max-w-2xl px-4 py-20 sm:py-28">
+    <section className="container mx-auto max-w-2xl px-4 py-6">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
         <motion.h2
           initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
           whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="font-serif text-[clamp(1.75rem,5vw,2.5rem)] font-semibold italic leading-none tracking-tight text-foreground"
+          className="font-serif text-[clamp(2.25rem,7vw,2.2rem)] font-semibold italic leading-none tracking-tight text-foreground"
         >
           Projects
         </motion.h2>
@@ -106,7 +110,7 @@ const Projects = () => {
               key={tab.value}
               type="button"
               onClick={() => setActive(tab.value)}
-              className="relative rounded-full px-4 py-1.5 text-[12.5px] font-medium tracking-wide transition-colors duration-300"
+              className="relative cursor-pointer rounded-full px-4 py-1.5 text-[12.5px] font-medium tracking-wide transition-colors duration-300"
             >
               {active === tab.value && (
                 <motion.span
