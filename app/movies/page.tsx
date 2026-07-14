@@ -51,7 +51,7 @@ const MoviesPage = () => {
           <motion.div
             key={movie.title}
             variants={fadeUp}
-            className={`pl-5 py-7 ${
+            className={`py-7 ${
               index !== movies.length - 1 ? "border-b border-border" : ""
             } ${index === 0 ? "border-t border-border" : ""}`}
           >
@@ -69,7 +69,7 @@ const MoviesPage = () => {
                 {movie.title}
               </h2>
 
-              <p className="max-w-md text-[13.5px] leading-relaxed text-muted-foreground">
+              <p className="max-w-2xl text-[13.5px] leading-relaxed text-muted-foreground">
                 {movie.description}
               </p>
             </div>
