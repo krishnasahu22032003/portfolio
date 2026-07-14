@@ -93,7 +93,7 @@ description:
     title: "NeuroSpark",
 description:
   "A premium UI/UX experience featuring modern visuals, fluid animations, and responsive components for next-generation web applications.",
-    image: "/projects/deadpool.png",
+    image: "/projects/neurospark.png",
     github: "https://github.com/krishnasahu22032003/AI-Landing-page",
     live: "https://ai-landing-page-m26o.vercel.app/",
     stack: ["Next Js", "Framer Motion" , "React" , "Tailwind"],
