@@ -4,6 +4,7 @@ import Hero from "@/components/landing/Hero";
 import Stack from "@/components/landing/StackSection";
 import ProjectsGrid from "@/components/landing/ProjectSection";
 import GithubActivity from "@/components/landing/Github";
+import Blog from "@/components/landing/Blogs";
 
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
 <Stack/>
 <Experience/>
 <ProjectsGrid/>
+<Blog/>
 <GithubActivity/>
     </main>
   );

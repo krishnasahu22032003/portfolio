@@ -54,7 +54,7 @@ const GithubActivity = () => {
   const colorScheme = useColorScheme()
 
   return (
-    <section className="container mx-auto max-w-2xl py-12">
+    <section className="container mx-auto max-w-2xl py-6">
       <motion.h2
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
