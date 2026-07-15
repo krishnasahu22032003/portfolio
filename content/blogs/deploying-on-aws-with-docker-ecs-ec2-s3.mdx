@@ -1,0 +1,180 @@
+The first time I deployed something to ECS, I burned an entire Saturday on a single misconfigured security group. Nobody warns you about that part — every tutorial makes it look like five clean steps. It's not. It's five steps and about three hours of "why is this task stuck in PENDING" in between.
+
+This is the version of the guide I wish I'd had — the actual steps, plus the stuff that broke on me along the way.
+
+### The setup
+
+Stack for this walkthrough: a Node.js API, containerized with Docker, pushed to ECR, running on ECS with the EC2 launch type (not Fargate — more on why below), with static assets served from S3.
+
+You'll need the AWS CLI installed and configured, Docker running locally, and an AWS account with an IAM user that has programmatic access.
+
+```bash
+aws configure
+```
+
+It'll ask for your access key, secret key, region, and output format. If you've never done this before, generate the keys from IAM → Users → Security credentials, not from the root account — using root credentials for CLI access is exactly the kind of thing that bites you later.
+
+### Why EC2 and not Fargate
+
+I get asked this a lot. Fargate is genuinely easier — no servers to manage, AWS just runs your containers. I still went EC2 for this project because I wanted to squeeze more out of smaller, cheaper instances by packing multiple containers onto one box, and Fargate charges per task regardless of how tightly you pack things. If cost isn't your main constraint, Fargate will save you a genuine afternoon of setup. I'm not going to pretend otherwise.
+
+### Step 1: Dockerize the app
+
+Nothing fancy — a multi-stage build so the final image doesn't ship your dev dependencies and source maps.
+
+```dockerfile
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+FROM node:20-alpine
+WORKDIR /app
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+RUN npm ci --omit=dev
+EXPOSE 3000
+CMD ["node", "dist/index.js"]
+```
+
+Build it and run it locally first — genuinely test this before you touch AWS at all. Half the ECS issues I've debugged for other people turned out to be a container that never worked correctly in the first place.
+
+```bash
+docker build -t my-api .
+docker run -p 3000:3000 my-api
+```
+
+If it doesn't respond on `localhost:3000` right now, it's not going to magically work once it's on ECS. Fix it here first.
+
+### Step 2: Push the image to ECR
+
+Create the repository:
+
+```bash
+aws ecr create-repository --repository-name my-api
+```
+
+Authenticate Docker against ECR — this token expires after 12 hours, which is the thing that got me the second time I did a deploy the next day and got a confusing auth error out of nowhere:
+
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <your-account-id>.dkr.ecr.us-east-1.amazonaws.com
+```
+
+Tag and push:
+
+```bash
+docker tag my-api:latest <your-account-id>.dkr.ecr.us-east-1.amazonaws.com/my-api:latest
+docker push <your-account-id>.dkr.ecr.us-east-1.amazonaws.com/my-api:latest
+```
+
+### Step 3: Set up the ECS cluster and EC2 instances
+
+Create the cluster with the EC2 launch type:
+
+```bash
+aws ecs create-cluster --cluster-name my-api-cluster
+```
+
+This part trips people up: creating the cluster doesn't create the EC2 instances for you. You need an Auto Scaling Group running the ECS-optimized AMI, with the instances registered into the cluster via user data. If you skip this, your cluster exists but has zero capacity, and every task you try to run just sits there.
+
+```bash
+#!/bin/bash
+echo ECS_CLUSTER=my-api-cluster >> /etc/ecs/ecs.config
+```
+
+That's the user data script your launch template needs — one line, easy to forget, and the entire reason my first attempt sat stuck for forty minutes with no error message telling me why.
+
+### Step 4: Task definition
+
+This is the config that tells ECS what to actually run.
+
+```json
+{
+  "family": "my-api-task",
+  "networkMode": "bridge",
+  "containerDefinitions": [
+    {
+      "name": "my-api",
+      "image": "<your-account-id>.dkr.ecr.us-east-1.amazonaws.com/my-api:latest",
+      "memory": 512,
+      "cpu": 256,
+      "portMappings": [
+        {
+          "containerPort": 3000,
+          "hostPort": 0
+        }
+      ],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" }
+      ]
+    }
+  ],
+  "requiresCompatibilities": ["EC2"]
+}
+```
+
+Register it:
+
+```bash
+aws ecs register-task-definition --cli-input-json file://task-definition.json
+```
+
+Note the `hostPort: 0` — that tells ECS to pick a random available port on the host instead of a fixed one, which is what lets you run more than one copy of the same task per instance. I didn't understand this the first time and locked myself into one task per box, wondering why my "auto scaling" wasn't actually scaling anything.
+
+### Step 5: Create the service
+
+```bash
+aws ecs create-service \
+  --cluster my-api-cluster \
+  --service-name my-api-service \
+  --task-definition my-api-task \
+  --desired-count 2 \
+  --launch-type EC2
+```
+
+`desired-count 2` means ECS keeps two healthy copies running at all times, and replaces one automatically if it dies. This is the actual value of ECS over just running Docker manually on a box — I didn't appreciate it until the first time a container OOM-killed itself at 3am and I woke up to find ECS had already replaced it before I even saw the alert.
+
+### Step 6: Load balancer, so you get one stable URL
+
+Containers on EC2 land on random ports across random instances — you need an Application Load Balancer in front to give clients one address to hit.
+
+```bash
+aws elbv2 create-load-balancer \
+  --name my-api-alb \
+  --subnets subnet-abc123 subnet-def456 \
+  --security-groups sg-0123456789
+```
+
+Then a target group, and attach it to your ECS service so new tasks register themselves automatically as they come up. This is the piece I actually got wrong on my first real deploy — I created the load balancer but forgot to point the ECS service at the target group, so the ALB was healthy-checking an empty target group and returning 502s for every single request while I frantically checked CloudWatch logs that showed the containers were completely fine.
+
+If you ever see a healthy container and a 502 from the ALB, check the target group attachment before anything else. That was my exact bug.
+
+### Step 7: S3 for static assets
+
+Create the bucket:
+
+```bash
+aws s3 mb s3://my-api-static-assets
+```
+
+Upload your build output:
+
+```bash
+aws s3 sync ./dist/public s3://my-api-static-assets --acl public-read
+```
+
+If you want this behind a proper domain with caching and HTTPS instead of the raw S3 URL, put CloudFront in front of it — that's a separate guide, but it's the natural next step once this part is working.
+
+### The security group problem that ate my Saturday
+
+Since I mentioned it up top — here's the actual bug, in case it saves you the same afternoon. My EC2 instances were in a security group that only allowed inbound traffic from my ALB's security group, which is correct and exactly what you want. The problem was I'd also locked down outbound traffic on that same security group, thinking I was being careful. That silently broke the ECS agent's ability to talk to the ECS control plane and pull the image from ECR — no useful error, just tasks stuck forever in PENDING with nothing in the logs because the container never even started.
+
+The fix: leave outbound traffic open (`0.0.0.0/0` on all ports) on the instance security group, and lock down inbound only. Outbound restriction is a false sense of security here and it costs you real debugging time. Learned this one the hard way.
+
+### What I'd tell past me before starting this
+
+Test the Docker image locally until you're bored of testing it. Read the ECS agent logs on the EC2 instance itself (`/var/log/ecs/ecs-agent.log`) the moment anything gets stuck in PENDING, don't just stare at the ECS console. And don't touch outbound security group rules unless you know exactly what you're locking down — I promise it's not worth the debugging session.
+
+None of this is complicated once it clicks. It's just that nobody tells you where it actually breaks the first time, so you end up rediscovering all of it yourself, one confusing error at a time.

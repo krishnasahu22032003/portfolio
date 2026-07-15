@@ -3,6 +3,7 @@ import path from "path"
 import { notFound } from "next/navigation"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { blogs } from "@/lib/Blog"
+import CodeBlock from "@/components/ui/CodeBlock"
 
 const BLOGS_DIRECTORY = path.join(process.cwd(), "content/blogs")
 
@@ -58,7 +59,7 @@ const BlogPostPage = async ({ params }: Props) => {
       </p>
 
       <article className="prose prose-neutral dark:prose-invert mt-6 max-w-none prose-headings:font-serif prose-headings:italic prose-headings:tracking-tight prose-headings:text-foreground prose-p:text-muted-foreground prose-a:text-foreground prose-strong:text-foreground prose-code:text-foreground prose-blockquote:border-border prose-blockquote:text-muted-foreground prose-hr:border-border">
-        <MDXRemote source={content} />
+        <MDXRemote source={content} components={{ pre: CodeBlock }} />
       </article>
     </section>
   )
