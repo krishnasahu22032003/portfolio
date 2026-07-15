@@ -3,7 +3,7 @@ export const blogs = [
     slug: "who-i-am-and-what-i-build",
     title: "Who I Am and What I Build",
     description:
-      "A quick introduction to my background, how I got into backend engineering, and the kind of problems I enjoy solving.",
+      "A quick introduction to my background, how I got into Full Stack engineering, and the kind of problems I enjoy solving.",
   },
   {
     slug: "projects-ive-built",
