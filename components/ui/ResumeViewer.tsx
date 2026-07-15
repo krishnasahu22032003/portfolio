@@ -1,95 +1,121 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Document, Page, pdfjs } from "react-pdf"
-import { Download, Minus, Plus } from "lucide-react"
-import "react-pdf/dist/Page/TextLayer.css"
-import "react-pdf/dist/Page/AnnotationLayer.css"
+import { useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
+import { Download, Minus, Plus } from "lucide-react";
+import "react-pdf/dist/Page/TextLayer.css";
+import "react-pdf/dist/Page/AnnotationLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  "pdfjs-dist/build/pdf.worker.min.mjs",
+  import.meta.url
+).toString();
 
-const MIN_SCALE = 0.6
-const MAX_SCALE = 2
-const SCALE_STEP = 0.2
+const MIN_SCALE = 0.6;
+const MAX_SCALE = 2;
+const SCALE_STEP = 0.2;
 
-const ResumeViewer = () => {
-  const [numPages, setNumPages] = useState(0)
-  const [scale, setScale] = useState(1)
+export default function ResumeViewer() {
+  const [numPages, setNumPages] = useState(0);
+  const [scale, setScale] = useState(1);
 
-  const onLoadSuccess = ({ numPages }: { numPages: number }) => {
-    setNumPages(numPages)
+  function onLoadSuccess({ numPages }: { numPages: number }) {
+    setNumPages(numPages);
   }
 
-  const zoomIn = () => {
-    setScale((prev) => Math.min(prev + SCALE_STEP, MAX_SCALE))
+  function zoomIn() {
+    setScale((prev) =>
+      Math.min(Number((prev + SCALE_STEP).toFixed(2)), MAX_SCALE)
+    );
   }
 
-  const zoomOut = () => {
-    setScale((prev) => Math.max(prev - SCALE_STEP, MIN_SCALE))
+  function zoomOut() {
+    setScale((prev) =>
+      Math.max(Number((prev - SCALE_STEP).toFixed(2)), MIN_SCALE)
+    );
   }
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center bg-background py-16">
-      <div className="flex flex-col items-center gap-6 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-sm">
-        <Document
-          file="/resume.pdf"
-          onLoadSuccess={onLoadSuccess}
-          loading={
-            <div className="flex h-[600px] w-[420px] items-center justify-center">
-              <span className="text-[13px] text-muted-foreground">
-                Loading resume...
-              </span>
-            </div>
-          }
-        >
-          {Array.from({ length: numPages }, (_, index) => (
-            <Page
-              key={index}
-              pageNumber={index + 1}
-              scale={scale}
-              className="mb-4 last:mb-0"
-            />
-          ))}
-        </Document>
+    <section className="container mx-auto max-w-3xl py-8">
+      <div>
+        <h1 className="font-serif text-[clamp(2.25rem,7vw,2.2rem)] font-semibold italic leading-none tracking-tight text-foreground">
+          Resume
+        </h1>
+
+        <p className="mt-3 text-sm text-muted-foreground">
+          Scroll through the resume, zoom for detail, or download a copy.
+        </p>
       </div>
 
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2">
-        <div className="btn-inner-shadow flex items-center gap-1 rounded-full border border-border bg-card px-2 py-1.5 shadow-sm">
-          <button
-            type="button"
-            onClick={zoomOut}
-            disabled={scale <= MIN_SCALE}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity duration-200 hover:opacity-70 disabled:opacity-30"
-          >
-            <Minus className="h-3.5 w-3.5" />
-          </button>
+      <div className="mt-8 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+        {/* Scrollable viewer */}
+        <div className="relative h-[80vh] overflow-y-auto bg-muted/20">
+          <div className="flex flex-col items-center px-4 pt-4 pb-24">
+            <Document
+              file="/resume.pdf"
+              onLoadSuccess={onLoadSuccess}
+              loading={
+                <div className="flex h-[600px] w-full items-center justify-center">
+                  <span className="text-sm text-muted-foreground">
+                    Loading resume...
+                  </span>
+                </div>
+              }
+              error={
+                <div className="flex h-[400px] w-full items-center justify-center">
+                  <span className="text-sm text-muted-foreground">
+                    Couldn't load the resume.
+                  </span>
+                </div>
+              }
+            >
+              {Array.from({ length: numPages }, (_, index) => (
+                <div key={index} className="mb-5 last:mb-0">
+                  <Page pageNumber={index + 1} scale={scale} />
+                </div>
+              ))}
+            </Document>
+          </div>
 
-          <span className="w-10 text-center text-[12px] font-medium tabular-nums text-foreground">
-            {Math.round(scale * 100)}%
-          </span>
+          {/* Sticky toolbar */}
+          <div className="sticky bottom-0 z-20 flex justify-center border-t border-border bg-card/90 px-4 py-3 backdrop-blur-md">
+            <div className="flex items-center gap-1 rounded-full border border-border bg-background px-2 py-1.5 shadow-lg">
+              <button
+                type="button"
+                onClick={zoomOut}
+                disabled={scale <= MIN_SCALE}
+                className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-muted disabled:opacity-30"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
 
-          <button
-            type="button"
-            onClick={zoomIn}
-            disabled={scale >= MAX_SCALE}
-            className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity duration-200 hover:opacity-70 disabled:opacity-30"
-          >
-            <Plus className="h-3.5 w-3.5" />
-          </button>
+              <span className="w-12 text-center text-xs font-medium tabular-nums">
+                {Math.round(scale * 100)}%
+              </span>
 
-          <div className="mx-1 h-4 w-px bg-border" />
+              <button
+                type="button"
+                onClick={zoomIn}
+                disabled={scale >= MAX_SCALE}
+                className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-muted disabled:opacity-30"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
 
-          <a
-            href="/resume.pdf"
-            download
-            className="flex h-8 w-8 items-center justify-center rounded-full text-muted-foreground transition-opacity duration-200 hover:opacity-70"
-          >
-            <Download className="h-3.5 w-3.5" />
-          </a>
+              <div className="mx-1 h-4 w-px bg-border" />
+
+              <a
+                href="/resume.pdf"
+                download
+                className="flex h-8 w-8 items-center justify-center rounded-full transition hover:bg-muted"
+                aria-label="Download Resume"
+              >
+                <Download className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
-  )
+  );
 }
-
-export default ResumeViewer
