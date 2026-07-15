@@ -59,7 +59,7 @@ const Experience = () => {
   const [open, setOpen] = useState(true)
 
   return (
-    <section className="container mx-auto max-w-2xl py-6">
+    <section className="container mx-auto max-w-2xl py-8">
       <motion.h2
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}

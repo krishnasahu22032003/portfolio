@@ -28,7 +28,7 @@ const Projects = () => {
       : frontendProjects.slice(0, 4)
 
   return (
-    <section className="container mx-auto max-w-2xl px-4 py-6">
+    <section className="container mx-auto max-w-2xl px-4 py-8">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
         <motion.h2
           initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}

@@ -52,9 +52,14 @@ const useColorScheme = () => {
 
 const GithubActivity = () => {
   const colorScheme = useColorScheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
-    <section className="container mx-auto max-w-2xl py-6">
+    <section className="container mx-auto max-w-2xl py-8">
       <motion.h2
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -96,20 +101,24 @@ const GithubActivity = () => {
 
           <div className="mt-5 -mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="min-w-[640px]">
-              <GitHubCalendar
-                username={GITHUB_USERNAME}
-                colorScheme={colorScheme}
-                theme={calendarTheme}
-                blockSize={11}
-                blockMargin={4}
-                blockRadius={3}
-                fontSize={12}
-                showWeekdayLabels
-                labels={{
-                  totalCount: "{{count}} contributions in the last year",
-                }}
-                errorMessage="Couldn't load GitHub activity right now."
-              />
+              {mounted ? (
+                <GitHubCalendar
+                  username={GITHUB_USERNAME}
+                  colorScheme={colorScheme}
+                  theme={calendarTheme}
+                  blockSize={11}
+                  blockMargin={4}
+                  blockRadius={3}
+                  fontSize={12}
+                  showWeekdayLabels
+                  labels={{
+                    totalCount: "{{count}} contributions in the last year",
+                  }}
+                  errorMessage="Couldn't load GitHub activity right now."
+                />
+              ) : (
+                <div className="h-[112px] w-full animate-pulse rounded-lg bg-muted" />
+              )}
             </div>
           </div>
         </motion.div>

@@ -28,11 +28,11 @@ const exploreLinks = [
 ]
 
 const socialLinks = [
-  { label: "Twitter", href: "https://twitter.com", icon: XIcon },
-  { label: "LinkedIn", href: "https://linkedin.com", icon: FaLinkedin },
-  { label: "GitHub", href: "https://github.com", icon: FaGithub },
-  { label: "Medium", href: "https://medium.com", icon: MediumIcon },
-  { label: "Gmail", href: "mailto:hello@example.com", icon: Mail },
+   { label: "Twitter", href: "https://x.com/krishnasahu2203", icon: XIcon },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/krishnasahu22/", icon: FaLinkedin },
+    { label: "GitHub", href: "https://github.com/krishnasahu22032003", icon: FaGithub },
+    { label: "Medium", href: "https://medium.com/@krishnasahu22", icon: MediumIcon },
+    { label: "Gmail",  href:"mailto:krishna.sahu.work@gmail.com", icon: Mail },
 ]
 
 const Footer = () => {
