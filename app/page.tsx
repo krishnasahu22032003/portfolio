@@ -3,6 +3,7 @@ import Experience from "@/components/landing/ExperienceSection";
 import Hero from "@/components/landing/Hero";
 import Stack from "@/components/landing/StackSection";
 import ProjectsGrid from "@/components/landing/ProjectSection";
+import GithubActivity from "@/components/landing/Github";
 
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
 <Stack/>
 <Experience/>
 <ProjectsGrid/>
+<GithubActivity/>
     </main>
   );
 }
