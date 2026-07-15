@@ -1,0 +1,62 @@
+Every few weeks someone asks me some version of the same question — usually a friend outside tech, sometimes a junior dev on my team who's genuinely a little scared. "So... is this thing going to take your job?"
+
+I've been building with LLMs in production for a while now — RAG pipelines, LangChain agents, the whole stack — and I've changed my mind on this a couple of times already. So instead of another hot take, here's what I've actually observed, with the boring specifics included.
+
+### The first time it actually scared me
+
+I remember the first time I asked an AI to refactor a gnarly piece of authentication middleware I'd been putting off for weeks. It took about forty seconds and came back with something cleaner than what I would've written on a first pass. I sat there for a solid minute just staring at the diff.
+
+That feeling — "oh, this is actually good" — is real, and I think anyone who dismisses it hasn't used these tools seriously. But that feeling faded into something more useful once I started using AI daily instead of occasionally. The panic wears off. What's left is just... a tool. A genuinely great one, but a tool.
+
+### What AI is genuinely good at
+
+Let me be specific instead of hand-wavy, because I think vague praise is part of what makes this whole conversation so confusing.
+
+Where it earns its keep, every single time:
+
+- **Boilerplate and scaffolding.** New CRUD endpoint, new Zod schema, new test file structure — things I've typed a thousand times before. I don't want to think about these anymore, and now I don't have to.
+- **Refactors with a clear target.** "Make this function pure," "extract this into a hook," "convert this callback chain to async/await." It's fast and it rarely gets these wrong.
+- **Reading unfamiliar code.** Dropped into a legacy codebase with zero docs? Pasting a file in and asking "what is this actually doing and why" saves real hours.
+- **Summarizing and explaining.** Dense AWS docs, a Kafka config option I've never touched, a stack trace I don't recognize — it gets me 80% of the way there almost instantly.
+- **Pattern completion at the sentence-to-paragraph level.** This is the actual mechanism under the hood, and it's why it's so good at code — code is enormously pattern-heavy compared to prose.
+
+None of this is "replacing developers." It's removing the parts of the job that were never really the job in the first place.
+
+### Where it quietly falls apart
+
+Here's the part people skip past because it's less exciting to talk about.
+
+I built a RAG-based support assistant a while back — vector database, LangChain, the standard architecture at this point. In a demo, it looked incredible. Fast, confident, well-formatted answers. In production, against real user questions that didn't match the shape of anything in the docs, it would confidently make things up. Not obviously wrong — subtly wrong, in a way that would've cost a user real time and trust if we hadn't caught it in review.
+
+That's the pattern I keep running into: AI is fantastic in the middle of the distribution and quietly dangerous at the edges, and the edges are usually where the actual engineering judgment lives.
+
+A few concrete things it still can't do, that I've hit personally:
+
+**It can't own a decision under uncertainty.** Should this service be sharded now or in six months when traffic actually justifies it? That's not a technical question with one right answer buried in a training set — it's a bet, made with incomplete information, that someone has to actually stand behind.
+
+**It doesn't know what it doesn't know about your system.** It'll confidently suggest a caching strategy that ignores the one weird constraint your infra has that isn't written down anywhere — because how would it know? It wasn't in the incident postmortem from eighteen months ago that only three people even remember.
+
+**It has no skin in the game.** When something breaks at 2am, someone gets paged, someone explains it to a frustrated customer, someone owns the fix and the follow-up. AI doesn't sit with the discomfort of having shipped something that broke. That discomfort is actually a huge part of what makes engineers careful.
+
+**It's a confident liar when it's wrong.** Not maliciously — it's just optimizing for a plausible-sounding answer, and plausible and correct aren't the same thing. The failure mode isn't "I don't know," it's "here's a very reasonable-sounding wrong answer." That's a genuinely harder failure mode to catch than a system that just errors out.
+
+### My findings, after actually shipping with it
+
+If I had to boil down a year-plus of using this stuff daily into a few honest conclusions:
+
+1. **It made me faster at things I already understood, and slower at things I didn't** — because it's very easy to accept a plausible-looking answer for a domain you can't personally evaluate, and only notice the mistake much later.
+2. **Code review got more important, not less.** The bugs it introduces are a different flavor than human bugs — syntactically clean, confidently wrong at the logic layer. You have to actually read the diff, not skim it.
+3. **The engineers who get the most out of it are the ones who already knew how to do the task without it.** It's an amplifier. If your fundamentals are solid, it multiplies your output. If they're shaky, it multiplies your blind spots just as easily.
+4. **The skill that matters more now, not less, is knowing what "good" looks like** — because generating output stopped being the bottleneck. Judging it is the bottleneck now.
+
+### So — will it replace you?
+
+Depends entirely on what "you" spend your day doing.
+
+If your value is typing out code that someone else already fully specified — yeah, that part of the job is shrinking, and it should. It was never the interesting part anyway.
+
+If your value is understanding a business problem well enough to make a real tradeoff, debugging a system you've never seen before at 2am with half the context missing, or knowing which of five technically-correct approaches is actually right for this team, this budget, this timeline — none of that shows up in a training set. That's built from doing the job long enough to develop taste.
+
+I don't think about it as "AI vs developers" anymore. I think about it as developers-with-AI vs developers-without-AI, and that gap is going to widen a lot faster than most people expect.
+
+That's my honest answer. Ask me again in a year — I have a feeling I'll have more to add.
