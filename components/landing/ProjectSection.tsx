@@ -6,6 +6,7 @@ import Link from "next/link"
 import { ProjectCard } from "../ui/ProjectCard"
 import { fullstackProjects } from "@/lib/FullstackProjects"
 import { frontendProjects } from "@/lib/FrontendProjects"
+import { ChevronDown } from "lucide-react"
 
 const tabs = [
   { label: "Full Stack", value: "fullstack" },
@@ -19,8 +20,20 @@ const container = {
   },
 }
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+  }
+}
+
 const Projects = () => {
   const [active, setActive] = useState("fullstack")
+
+  
 
   const filtered =
     active === "fullstack"
@@ -86,14 +99,16 @@ const Projects = () => {
         </AnimatePresence>
       </div>
 
-      <div className="mt-12 flex justify-center">
-        <Link
-          href="/projects"
-          className="btn-inner-shadow inline-flex items-center rounded-full border border-border bg-card px-5 py-2 text-[13px] font-medium tracking-wide text-foreground transition-opacity duration-200 hover:opacity-80"
-        >
-          View more
-        </Link>
-      </div>
+    
+        <motion.div variants={fadeUp} className="flex justify-center py-8">
+          <Link
+            href="/projects"
+            className="btn-inner-shadow inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-5 py-2 text-[13px] font-medium tracking-wide text-foreground transition-opacity duration-200 hover:opacity-80"
+          >
+            View more
+            <ChevronDown className="h-3.5 w-3.5" />
+          </Link>
+        </motion.div>
     </section>
   )
 }

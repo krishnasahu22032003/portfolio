@@ -169,7 +169,7 @@ const Experience = () => {
             href="/work"
             className="btn-inner-shadow inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-5 py-2 text-[13px] font-medium tracking-wide text-foreground transition-opacity duration-200 hover:opacity-80"
           >
-            Show more
+            View more
             <ChevronDown className="h-3.5 w-3.5" />
           </Link>
         </motion.div>
