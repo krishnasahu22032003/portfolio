@@ -26,6 +26,7 @@ export const metadata: Metadata = {
   referrer: "origin-when-cross-origin",
   description: siteDescription,
   manifest: "/manifest.json",
+  publisher: siteName,
   keywords: [
   "Krishna Sahu",
   "Krishna Sahu Portfolio",
@@ -41,6 +42,7 @@ export const metadata: Metadata = {
   applicationName: siteName,
   openGraph: {
     type: "website",
+    locale: "en_US",
     url: siteUrl,
     title: `${siteName} — Software Engineer`,
     description: siteDescription,
@@ -50,7 +52,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: siteName,
+        alt: "Krishna Sahu Portfolio",
       },
     ],
   },
@@ -60,6 +62,7 @@ export const metadata: Metadata = {
     description: siteDescription,
     images: ["/og-image.png"],
     creator: "@krishnasahu2203",
+    site: "@krishnasahu2203"
   },
   icons: {
     icon: "/favicon.ico",
