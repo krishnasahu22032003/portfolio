@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://yourdomain.com";
+const siteUrl = "https://krishnastack.com";
 const siteName = "Krishna Sahu";
 const siteDescription =
   "Portfolio of Krishna Sahu — a software engineer building thoughtful, well-crafted products.";
@@ -22,8 +22,19 @@ export const metadata: Metadata = {
     default: `${siteName} — Software Engineer`,
     template: `%s — ${siteName}`,
   },
+  category: "technology",
+  referrer: "origin-when-cross-origin",
   description: siteDescription,
-  keywords: ["Your Name", "Software Engineer", "Portfolio", "Web Developer", "Frontend Engineer"],
+  keywords: [
+  "Krishna Sahu",
+  "Krishna Sahu Portfolio",
+  "Software Engineer",
+  "Full Stack Engineer",
+  "Frontend Engineer",
+  "Backend Engineer",
+  "DevOps Engineer",
+  "Web Developer",
+],
   authors: [{ name: siteName, url: siteUrl }],
   creator: siteName,
   applicationName: siteName,
@@ -47,12 +58,11 @@ export const metadata: Metadata = {
     title: `${siteName} — Software Engineer`,
     description: siteDescription,
     images: ["/og-image.png"],
-    creator: "@yourhandle",
+    creator: "@krishnasahu2203",
   },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,

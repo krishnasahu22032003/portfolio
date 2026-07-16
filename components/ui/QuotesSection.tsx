@@ -97,7 +97,13 @@ const Quotes = () => {
 
   return (
     <section className="container mx-auto max-w-2xl px-8 py-16 sm:py-20">
-      <div className="relative overflow-hidden rounded-2xl border border-border bg-card  py-8  sm:py-10">
+      <motion.div
+        initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative overflow-hidden rounded-2xl border border-border bg-card  py-8  sm:py-10"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
@@ -167,7 +173,7 @@ const Quotes = () => {
             </button>
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
