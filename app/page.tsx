@@ -5,6 +5,7 @@ import Stack from "@/components/landing/StackSection";
 import ProjectsGrid from "@/components/landing/ProjectSection";
 import GithubActivity from "@/components/landing/Github";
 import Blog from "@/components/landing/Blogs";
+import LetsConnect from "@/components/landing/BookCall";
 
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
 <ProjectsGrid/>
 <Blog/>
 <GithubActivity/>
+<LetsConnect/>
     </main>
   );
 }

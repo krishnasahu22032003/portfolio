@@ -29,7 +29,7 @@ const Hero = () => {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <h3 className="font-serif text-xl font-semibold leading-none tracking-tight text-foreground sm:text-2xl">
+          <h3 className="font-serif text-xl font-semibold leading-none tracking-tight text-foreground sm:text-3xl">
             <TextReveal text={name} delay={550} />
           </h3>
 

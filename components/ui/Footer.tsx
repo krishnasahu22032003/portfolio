@@ -37,7 +37,7 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border">
+    <footer className="border-t border-border px-4">
       <div className="container mx-auto max-w-2xl py-8 sm:py-10">
         <div className="flex flex-col items-center gap-8 text-center sm:gap-10">
           <div className="flex flex-col items-center gap-3">

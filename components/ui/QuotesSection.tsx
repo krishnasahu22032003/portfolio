@@ -96,7 +96,7 @@ const Quotes = () => {
   const current = animeQuotes[index]
 
   return (
-    <section className="container mx-auto max-w-2xl py-16 sm:py-20">
+    <section className="container mx-auto max-w-2xl px-8 py-16 sm:py-20">
       <div className="relative overflow-hidden rounded-2xl border border-border bg-card  py-8  sm:py-10">
         <div
           aria-hidden="true"
@@ -146,7 +146,7 @@ const Quotes = () => {
           </AnimatePresence>
         </div>
 
-        <div className="relative mt-5 flex items-center justify-center gap-1.5">
+        <div className="relative mt-5 px-4 flex items-center justify-center gap-1.5">
           {animeQuotes.map((_, i) => (
             <button
               key={i}
