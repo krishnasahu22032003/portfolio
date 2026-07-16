@@ -25,6 +25,7 @@ export const metadata: Metadata = {
   category: "technology",
   referrer: "origin-when-cross-origin",
   description: siteDescription,
+  manifest: "/manifest.json",
   keywords: [
   "Krishna Sahu",
   "Krishna Sahu Portfolio",
