@@ -23,7 +23,7 @@ const fadeUp = {
 
 const CertificatesPage = () => {
   return (
-    <section className="container mx-auto max-w-2xl py-6">
+    <section className="container mx-auto max-w-2xl py-6 px-4">
       <motion.h1
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
