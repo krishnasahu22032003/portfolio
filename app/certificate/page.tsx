@@ -1,20 +1,51 @@
+"use client"
+
+import { motion } from "framer-motion"
 import { ExternalLink } from "lucide-react"
 import { certificates } from "@/lib/Certificate"
+
+const sectionContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+  },
+}
 
 const CertificatesPage = () => {
   return (
     <section className="container mx-auto max-w-2xl py-6">
-      <h1 className="font-serif text-[clamp(2.25rem,7vw,2.2rem)] font-semibold italic leading-none tracking-tight text-foreground">
+      <motion.h1
+        initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="font-serif text-[clamp(2.25rem,7vw,2.2rem)] font-semibold italic leading-none tracking-tight text-foreground"
+      >
         Certificates
-      </h1>
+      </motion.h1>
       <p className="mt-4 text-[14px] leading-relaxed text-muted-foreground">
         Certifications and courses I have completed along the way.
       </p>
 
-      <div className="mt-8 border-t border-border">
+      <motion.div
+        variants={sectionContainer}
+        initial="hidden"
+        animate="show"
+        className="mt-8 border-t border-border"
+      >
         {certificates.map((certificate) => (
-          <div
+          <motion.div
             key={certificate.title}
+            variants={fadeUp}
             className="flex flex-col gap-4 border-b border-border py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
           >
             <div className="flex flex-col gap-1.5">
@@ -35,9 +66,9 @@ const CertificatesPage = () => {
               View certificate
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   )
 }

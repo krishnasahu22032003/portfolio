@@ -22,12 +22,29 @@ const fadeUp = {
   },
 }
 
+const listContainer = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06 },
+  },
+}
+
 const pointVariant = {
   hidden: { opacity: 0, y: 10 },
   show: {
     opacity: 1,
     y: 0,
     transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const },
+  },
+}
+
+const tagVariant = {
+  hidden: { opacity: 0, y: 8, scale: 0.95 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const },
   },
 }
 
@@ -87,20 +104,23 @@ const WorkPage = () => {
                 </div>
               </div>
 
-              <button
+              <motion.button
                 type="button"
                 onClick={() => toggle(index)}
+                whileTap={{ scale: 0.98 }}
                 className="mt-4 flex w-full items-center justify-between gap-4 text-left"
               >
                 <span className="text-[13px] font-medium tracking-wide text-foreground">
                   {exp.role}
                 </span>
-                <ChevronDown
-                  className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 ${
-                    isOpen ? "rotate-180" : "rotate-0"
-                  }`}
-                />
-              </button>
+                <motion.span
+                  animate={{ rotate: isOpen ? 180 : 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="shrink-0"
+                >
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                </motion.span>
+              </motion.button>
 
               <AnimatePresence initial={false}>
                 {isOpen && (
@@ -111,14 +131,16 @@ const WorkPage = () => {
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                     className="overflow-hidden"
                   >
-                    <ul className="mt-4 flex flex-col gap-2.5">
+                    <motion.ul
+                      variants={listContainer}
+                      initial="hidden"
+                      animate="show"
+                      className="mt-4 flex flex-col gap-2.5"
+                    >
                       {exp.points.map((point, i) => (
                         <motion.li
                           key={i}
                           variants={pointVariant}
-                          initial="hidden"
-                          animate="show"
-                          transition={{ delay: i * 0.05 }}
                           className="flex gap-2.5 text-[14px] leading-relaxed text-muted-foreground"
                         >
                           <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/40" />
@@ -135,18 +157,24 @@ const WorkPage = () => {
                           </span>
                         </motion.li>
                       ))}
-                    </ul>
+                    </motion.ul>
 
-                    <div className="mt-5 flex flex-wrap gap-2">
+                    <motion.div
+                      variants={listContainer}
+                      initial="hidden"
+                      animate="show"
+                      className="mt-5 flex flex-wrap gap-2"
+                    >
                       {exp.tags.map((tag) => (
-                        <span
+                        <motion.span
                           key={tag}
+                          variants={tagVariant}
                           className="tag-inner-shadow rounded-full border border-border bg-card px-3 py-1.5 text-[12px] font-medium tracking-wide text-muted-foreground"
                         >
                           {tag}
-                        </span>
+                        </motion.span>
                       ))}
-                    </div>
+                    </motion.div>
                   </motion.div>
                 )}
               </AnimatePresence>

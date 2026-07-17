@@ -15,10 +15,10 @@ export const certificates = [
     title: "Basics of Data Structures and Algorithms",
     description:
       "Course certificate verifying successful completion of the fundamentals of data structures and algorithms.",
-    link: "eyJjb3Vyc2VfaWQiOiIzMzczIiwiY2VydGlmaWNhdGVfdXJsIjoiaHR0cHM6XC9cL2NlcnRpZmljYXRlcy5zaW1wbGljZG4ubmV0XC9zaGFyZVwvOTAzNjg2N185Mzk0MzE2MTc1ODY1NzQzNTMyOC5wbmciLCJ1c2VybmFtZSI6IktSSVNITkEgU0FIVSJ9",
+    link: "https://www.simplilearn.com/skillup-certificate-landing?token=eyJjb3Vyc2VfaWQiOiIzMzczIiwiY2VydGlmaWNhdGVfdXJsIjoiaHR0cHM6XC9cL2NlcnRpZmljYXRlcy5zaW1wbGljZG4ubmV0XC9zaGFyZVwvOTAzNjg2N185Mzk0MzE2MTc1ODY1NzQzNTMyOC5wbmciLCJ1c2VybmFtZSI6IktSSVNITkEgU0FIVSJ9&utm_source=shared-certificate&utm_medium=lms&utm_campaign=shared-certificate-promotion&referrer=https%3A%2F%2Flms.simplilearn.com%2Fcourses%2F6201%2FBasics-of-Data-Structures-and-Algorithms%2Fcertificate%2Fdownload-skillup&%24web_only=true&_branch_match_id=1606779970467859960&_branch_referrer=H4sIAAAAAAAAA8soKSkottLXL87MLcjJ1EssKNDLyczL1k%2FV97FwNXIvc0kMDU%2ByrytKTUstKsrMS49PKsovL04tsvUBqkpN8cwDAF7Y%2FU9BAAAA",
   },
   {
-     title: "SQL (Basic) Certificate",
+     title: "HackerRank SQL (Basic) Certificate",
   description:
     "HackerRank certification verifying proficiency in basic SQL concepts, including simple queries, relationships, aggregation functions, and basic data manipulation.",
     link: "https://www.hackerrank.com/certificates/9fc0efd39941",
