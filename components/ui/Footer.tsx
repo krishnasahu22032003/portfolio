@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Heart, Mail } from "lucide-react"
-import { FaGithub , FaLinkedin } from "react-icons/fa6"
+import { FaGithub, FaLinkedin } from "react-icons/fa6"
 
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -22,17 +22,18 @@ const exploreLinks = [
   { label: "Resume", href: "/resume" },
   { label: "Blogs", href: "/blogs" },
   { label: "Projects", href: "/projects" },
+  { label: "Certificates", href: "/certificate" },
   { label: "Movies", href: "/movies" },
   { label: "Books", href: "/books" },
   { label: "Gears", href: "/gears" },
 ]
 
 const socialLinks = [
-   { label: "Twitter", href: "https://x.com/krishnasahu2203", icon: XIcon },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/krishnasahu22/", icon: FaLinkedin },
-    { label: "GitHub", href: "https://github.com/krishnasahu22032003", icon: FaGithub },
-    { label: "Medium", href: "https://medium.com/@krishnasahu22", icon: MediumIcon },
-    { label: "Gmail",  href:"mailto:krishna.sahu.work@gmail.com", icon: Mail },
+  { label: "Twitter", href: "https://x.com/krishnasahu2203", icon: XIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/krishnasahu22/", icon: FaLinkedin },
+  { label: "GitHub", href: "https://github.com/krishnasahu22032003", icon: FaGithub },
+  { label: "Medium", href: "https://medium.com/@krishnasahu22", icon: MediumIcon },
+  { label: "Gmail", href: "mailto:krishna.sahu.work@gmail.com", icon: Mail },
 ]
 
 const Footer = () => {
@@ -81,16 +82,16 @@ const Footer = () => {
               ))}
             </div>
           </div>
-<div className="flex flex-col items-center gap-1.5">
-  <span className="flex items-center gap-1.5 font-serif text-base font-semibold tracking-tight text-foreground">
-    Made with
-    <Heart className="h-3.5 w-3.5 fill-destructive text-destructive" />
-    by Krishna Sahu
-  </span>
-  <span className="text-[12px] tracking-wide text-muted-foreground">
-    All rights reserved &copy; {new Date().getFullYear()}
-  </span>
-</div>
+          <div className="flex flex-col items-center gap-1.5">
+            <span className="flex items-center gap-1.5 font-serif text-base font-semibold tracking-tight text-foreground">
+              Made with
+              <Heart className="h-3.5 w-3.5 fill-destructive text-destructive" />
+              by Krishna Sahu
+            </span>
+            <span className="text-[12px] tracking-wide text-muted-foreground">
+              All rights reserved &copy; {new Date().getFullYear()}
+            </span>
+          </div>
         </div>
       </div>
     </footer>
