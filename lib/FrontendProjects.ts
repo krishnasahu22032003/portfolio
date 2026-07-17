@@ -33,7 +33,7 @@ description:
     title: "Zestik",
     description:
   "An immersive beverage brand experience featuring scroll-driven animations, fluid interactions, and premium motion design.",
-    image: "/projects/zestik.png",
+    image: "/projects/Zestik.png",
     github: "https://github.com/krishnasahu22032003/Award-winning-website",
     live: "https://award-winning-website-bice-phi.vercel.app/",
     stack: ["React", "ScrollTrigger", "GSAP" , "Tailwind"],
