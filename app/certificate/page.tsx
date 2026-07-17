@@ -1,5 +1,4 @@
 import { ExternalLink } from "lucide-react"
-import Link from "next/link"
 import { certificates } from "@/lib/Certificate"
 
 const CertificatesPage = () => {
@@ -15,7 +14,7 @@ const CertificatesPage = () => {
       <div className="mt-8 border-t border-border">
         {certificates.map((certificate) => (
           <div
-            key={certificate.slug}
+            key={certificate.title}
             className="flex flex-col gap-4 border-b border-border py-6 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
           >
             <div className="flex flex-col gap-1.5">
@@ -27,13 +26,15 @@ const CertificatesPage = () => {
               </p>
             </div>
 
-            <Link
-              href={`/certificates/${certificate.slug}`}
+            <a
+              href={certificate.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-inner-shadow inline-flex w-fit shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-4 py-1.5 text-[12px] font-medium tracking-wide text-foreground transition-opacity duration-200 hover:opacity-80"
             >
               View certificate
               <ExternalLink className="h-3.5 w-3.5" />
-            </Link>
+            </a>
           </div>
         ))}
       </div>
