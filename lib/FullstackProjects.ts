@@ -29,4 +29,24 @@ description:
     stack: ["Node Js", "RBAC", "Prisma", "Docker" , "Postgres" , "JWT" ,"React", "TypeScript","Zod","Express" ,"AWS"],
     category: "fullstack",
   },
+  {
+    title: "BrainBin",
+    description:
+      "A second-brain productivity app for capturing, organizing, and revisiting saved content from Twitter, YouTube, Instagram, and Facebook in one searchable workspace.",
+    image: "/projects/brainbin.png",
+    github: "https://github.com/krishnasahu22032003/BrainBin",
+    live: "https://brainbin.krishnastack.com/",
+    stack: ["React", "TypeScript", "Node Js", "Express", "MongoDB", "Mongoose", "JWT", "Tailwind CSS" , "Tanstack Query"],
+    category: "fullstack",
+  },
+  {
+    title: "Quizli",
+    description:
+      "An AI-powered quiz generator that transforms any topic or document into interactive quizzes, complete with instant scoring and performance insights.",
+    image: "/projects/quizli.png",
+    github: "https://github.com/krishnasahu22032003/Quizli",
+    live: "https://quizli.krishnastack.com/",
+    stack: ["Next JS", "TypeScript", "Gemini API", "Google Auth", "Tailwind CSS" , "Postgresql" , "Prisma" , "Framer Motion"],
+    category: "fullstack",
+  },
 ] ;
