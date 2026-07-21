@@ -47,4 +47,10 @@ export const certificates = [
       "Certificate of completion for the Software Engineering Job Simulation, completed December 26th, 2025.",
     link: "https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_694e7cb239ff7eaad9dfbf8b_1766752521357_completion_certificate.pdf",
   },
+  {
+  title: "HackerRank Software Engineer Certification",
+  description:
+    "Verified HackerRank Software Engineer Certification, demonstrating proficiency in software engineering fundamentals, problem-solving, and coding skills.",
+  link: "https://www.hackerrank.com/certificates/482069d886f5",
+},
 ]
