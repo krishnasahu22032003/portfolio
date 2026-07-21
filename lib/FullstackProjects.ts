@@ -49,4 +49,24 @@ description:
     stack: ["Next JS", "TypeScript", "Gemini API", "Google Auth", "Tailwind CSS" , "Postgresql" , "Prisma" , "Framer Motion"],
     category: "fullstack",
   },
+  {
+    title: "KareroAI",
+    description:
+      "An AI-powered career coach that helps job seekers build resumes, prep for interviews with mock quizzes, generate tailored cover letters, and stay updated with real-time industry insights.",
+    image: "/projects/kareroai.png",
+    github: "https://github.com/krishnasahu22032003/karero",
+    live: "https://kareroai.krishnastack.com/",
+    stack: ["Next JS", "TypeScript", "Gemini API", "Clerk Auth", "Tailwind CSS", "Postgresql", "Prisma", "Inngest"],
+    category: "fullstack",
+  },
+  {
+    title: "LinkForge",
+    description:
+      "A high-performance URL shortener with real-time click analytics and geo-tracking, powered by Redis caching for lightning-fast redirects at scale.",
+    image: "/projects/linkforge.png",
+    github: "https://github.com/krishnasahu22032003/linkforge",
+    live: "https://linkforge.krishnastack.com/",
+    stack: ["Next JS", "TypeScript", "Redis", "Postgresql", "Prisma", "Tailwind CSS", "Express" , "Framer Motion" , "ECS"],
+    category: "fullstack",
+  },
 ] ;
