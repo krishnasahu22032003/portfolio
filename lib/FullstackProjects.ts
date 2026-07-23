@@ -6,7 +6,7 @@ export const fullstackProjects = [
     image: "/projects/studymint.png",
     github: "https://github.com/krishnasahu22032003/StudyMint",
     live: "https://studymint.krishnastack.com/",
-    stack: ["React", "TypeScript", "Mongo DB", "Zod" , "Gemini" , "Razorpay" , "Express" , "Node Js" , "Framer Motion" , "Docker" ,"AWS"],
+    stack: ["React", "TypeScript", "Mongo DB", "Zod", "Gemini", "Razorpay", "Express", "Node Js", "Framer Motion", "Docker", "AWS"],
     category: "fullstack",
   },
   {
@@ -16,17 +16,17 @@ export const fullstackProjects = [
     image: "/projects/supportmint.png",
     github: "https://github.com/krishnasahu22032003/supportmint",
     live: "https://supportmint.krishnastack.com/",
-    stack: ["Express" , "Node Js" ,"Mongo DB", "Next Js" , "Gemini" , "TypeScript" , "Scale Kit" , "Framer Motion" , "Docker" , "AWS"],
+    stack: ["Express", "Node Js", "Mongo DB", "Next Js", "Gemini", "TypeScript", "Scale Kit", "Framer Motion", "Docker", "AWS"],
     category: "fullstack",
   },
   {
     title: "SpeakUp",
-description:
-  "A secure crime reporting platform enabling anonymous submissions, real-time complaint tracking, and streamlined administrative case management.",
+    description:
+      "A secure crime reporting platform enabling anonymous submissions, real-time complaint tracking, and streamlined administrative case management.",
     image: "/projects/speakup.png",
     github: "https://github.com/krishnasahu22032003/SpeakUp",
     live: "https://speakup.krishnastack.com/",
-    stack: ["Node Js", "RBAC", "Prisma", "Docker" , "Postgres" , "JWT" ,"React", "TypeScript","Zod","Express" ,"AWS"],
+    stack: ["Node Js", "RBAC", "Prisma", "Docker", "Postgres", "JWT", "React", "TypeScript", "Zod", "Express", "AWS"],
     category: "fullstack",
   },
   {
@@ -36,7 +36,7 @@ description:
     image: "/projects/brainbin.png",
     github: "https://github.com/krishnasahu22032003/BrainBin",
     live: "https://brainbin.krishnastack.com/",
-    stack: ["React", "TypeScript", "Node Js", "Express", "MongoDB", "Mongoose", "JWT", "Tailwind CSS" , "Tanstack Query"],
+    stack: ["React", "TypeScript", "Node Js", "Express", "MongoDB", "Mongoose", "JWT", "Tailwind CSS", "Tanstack Query"],
     category: "fullstack",
   },
   {
@@ -46,7 +46,7 @@ description:
     image: "/projects/quizli.png",
     github: "https://github.com/krishnasahu22032003/Quizli",
     live: "https://quizli.krishnastack.com/",
-    stack: ["Next JS", "TypeScript", "Gemini API", "Google Auth", "Tailwind CSS" , "Postgresql" , "Prisma" , "Framer Motion"],
+    stack: ["Next JS", "TypeScript", "Gemini API", "Google Auth", "Tailwind CSS", "Postgresql", "Prisma", "Framer Motion"],
     category: "fullstack",
   },
   {
@@ -66,7 +66,17 @@ description:
     image: "/projects/linkforge.png",
     github: "https://github.com/krishnasahu22032003/linkforge",
     live: "https://linkforge.krishnastack.com/",
-    stack: ["Next JS", "TypeScript", "Redis", "Postgresql", "Prisma", "Tailwind CSS", "Express" , "Framer Motion" , "ECS"],
+    stack: ["Next JS", "TypeScript", "Redis", "Postgresql", "Prisma", "Tailwind CSS", "Express", "Framer Motion", "ECS"],
     category: "fullstack",
   },
-] ;
+  {
+    title: "Calmry",
+    description:
+      "An AI-powered mental wellness companion offering personalized therapy conversations, mood analysis, interactive activities, mindfulness games, and actionable insights to support emotional well-being and build healthier daily habits.",
+    image: "/projects/calmry.png",
+    github: "https://github.com/krishnasahu22032003/calmry",
+    live: "https://calmry.krishnastack.com",
+    stack: ["Next.js", "TypeScript", "Express", "PostgreSQL", "Prisma", "Gemini AI", "Tailwind CSS", "Framer Motion", "AWS", "Inngest"],
+    category: "fullstack",
+  },
+];
