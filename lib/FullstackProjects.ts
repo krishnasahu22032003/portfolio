@@ -79,4 +79,36 @@ export const fullstackProjects = [
     stack: ["Next.js", "TypeScript", "Express", "PostgreSQL", "Prisma", "Gemini AI", "Tailwind CSS", "Framer Motion", "AWS", "Inngest"],
     category: "fullstack",
   },
+  {
+  title: "Scoreva",
+  description:
+    "A real-time sports scoring platform where administrators can create and manage live matches, publish ball-by-ball commentary, update scores instantly, and deliver live match statistics to fans through WebSocket-powered real-time synchronization.",
+  image: "/projects/scoreva.png",
+  github: "https://github.com/krishnasahu22032003/Scoreva",
+  live: "https://github.com/krishnasahu22032003/Scoreva",
+  stack: ["Next.js", "TypeScript", "Express", "PostgreSQL", "Prisma", "WebSockets", "Tailwind CSS", "Framer Motion" , "ArcJet"],
+  category: "fullstack",
+},
+
+{
+  title: "DrawNova",
+  description:
+    "A collaborative whiteboard platform inspired by Excalidraw, enabling teams to create secure rooms, invite participants, sketch together in real time, and collaborate seamlessly with synchronized drawing, editing, and cursor interactions powered by WebSockets.",
+  image: "/projects/drawnova.png",
+  github: "https://github.com/krishnasahu22032003/drawnova",
+  live: "https://github.com/krishnasahu22032003/drawnova",
+  stack: ["Next.js", "TypeScript", "Node.js", "WebSockets", "PostgreSQL", "Prisma", "Canvas API", "Tailwind CSS", "Framer Motion" , "TurboRepo"],
+  category: "fullstack",
+},
+
+{
+  title: "ChatVora",
+  description:
+    "A modern real-time messaging platform featuring instant one-to-one conversations, live online presence, typing indicators, message delivery status, contact management, and seamless communication powered by WebSockets for a fast and responsive chat experience.",
+  image: "/projects/chatvora.png",
+  github: "https://github.com/krishnasahu22032003/ChatVora---Real-Time-Full-Stack-Chat-Application",
+  live: "https://github.com/krishnasahu22032003/ChatVora---Real-Time-Full-Stack-Chat-Application",
+  stack: ["React Js", "TypeScript", "Express", "Mongo DB", "Mongoose", "socket.io", "Tailwind CSS", "Framer Motion" ,"Resend" , "ArcJet" ,"loudinary"], 
+  category: "fullstack",
+},
 ];
