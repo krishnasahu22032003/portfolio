@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { Heart, Mail } from "lucide-react"
 import { FaGithub, FaLinkedin } from "react-icons/fa6"
+import { SiNotion } from "react-icons/si";
 
 const XIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
@@ -22,6 +23,11 @@ const exploreLinks = [
   { label: "Resume", href: "/resume" },
   { label: "Blogs", href: "/blogs" },
   { label: "Projects", href: "/projects" },
+  {
+    label: "Project Archive",
+    href: "https://ripple-society-389.notion.site/Krishna-Sahu-3aa5b8b49ee980ce96d3f3e1c7d47bc7",
+    external: true,
+  },
   { label: "Certificates", href: "/certificate" },
   { label: "Movies", href: "/movies" },
   { label: "Books", href: "/books" },
@@ -30,6 +36,11 @@ const exploreLinks = [
 
 const socialLinks = [
   { label: "Twitter", href: "https://x.com/krishnasahu2203", icon: XIcon },
+  {
+  label: "Notion",
+  href: "https://ripple-society-389.notion.site/Krishna-Sahu-3aa5b8b49ee980ce96d3f3e1c7d47bc7",
+  icon: SiNotion,
+},
   { label: "LinkedIn", href: "https://www.linkedin.com/in/krishnasahu22/", icon: FaLinkedin },
   { label: "GitHub", href: "https://github.com/krishnasahu22032003", icon: FaGithub },
   { label: "Medium", href: "https://medium.com/@krishnasahu22", icon: MediumIcon },
@@ -46,16 +57,27 @@ const Footer = () => {
               Explore
             </span>
             <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5">
-              {exploreLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    className="text-[13px] font-medium tracking-wide text-muted-foreground transition-colors duration-200 hover:text-foreground"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+           {exploreLinks.map((link) => (
+  <li key={link.label}>
+    {link.external ? (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[13px] font-medium tracking-wide text-muted-foreground transition-colors duration-200 hover:text-foreground"
+      >
+        {link.label}
+      </a>
+    ) : (
+      <Link
+        href={link.href}
+        className="text-[13px] font-medium tracking-wide text-muted-foreground transition-colors duration-200 hover:text-foreground"
+      >
+        {link.label}
+      </Link>
+    )}
+  </li>
+))}
             </ul>
           </div>
 

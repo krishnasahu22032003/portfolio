@@ -3,7 +3,6 @@
 import { TextReveal } from "@/components/ui/text-reveal"
 import HeroLinks from "./HeroLinks"
 
-const quote = "Building the future."
 const name = "Krishna Sahu"
 const keywords = [
   "Build",
