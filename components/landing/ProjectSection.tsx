@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
+import { Link } from "next-view-transitions";
 import { ProjectCard } from "../ui/ProjectCard"
 import { fullstackProjects } from "@/lib/FullstackProjects"
 import { frontendProjects } from "@/lib/FrontendProjects"

@@ -1,6 +1,6 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "next-view-transitions";
 import { Heart, Mail } from "lucide-react"
 import { FaGithub, FaLinkedin } from "react-icons/fa6"
 import { SiNotion } from "react-icons/si";

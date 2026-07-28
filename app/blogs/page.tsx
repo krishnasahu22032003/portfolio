@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
-import Link from "next/link"
+import { Link } from "next-view-transitions";
 import { blogs } from "@/lib/Blog"
 
 const sectionContainer = {

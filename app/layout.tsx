@@ -7,6 +7,7 @@ import Quotes from "@/components/ui/QuotesSection";
 import Footer from "@/components/ui/Footer";
 import StructuredData from "@/components/StructuredData";
 import SmoothScroll from "@/components/ui/SmoothScroll ";
+import { ViewTransitions } from "next-view-transitions";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -101,6 +102,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+        <ViewTransitions>
     <html
       lang="en"
       suppressHydrationWarning
@@ -117,5 +119,6 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
+    </ViewTransitions>
   );
 }

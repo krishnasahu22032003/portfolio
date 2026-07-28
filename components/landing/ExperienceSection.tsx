@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronDown } from "lucide-react"
-import Link from "next/link"
+import { Link } from "next-view-transitions";
 
 const points = [
   ["Reduced API latency by ", "45%", " through database optimization, Redis caching, and asynchronous processing, significantly improving application responsiveness."],
