@@ -6,6 +6,7 @@ import Header from "@/components/landing/Header";
 import Quotes from "@/components/ui/QuotesSection";
 import Footer from "@/components/ui/Footer";
 import StructuredData from "@/components/StructuredData";
+import SmoothScroll from "@/components/ui/SmoothScroll ";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -108,6 +109,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-body">
         <StructuredData/>
         <ThemeProvider>
+            <SmoothScroll />
          <Header/>
           <main className="flex-1 px-4">{children}</main>
           <Quotes/>
