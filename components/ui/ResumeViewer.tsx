@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState, type WheelEvent, type TouchEvent } from "react";
 import { motion } from "framer-motion";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Download, Minus, Plus } from "lucide-react";
@@ -29,6 +29,7 @@ const fadeUp = {
 export default function ResumeViewer() {
   const [numPages, setNumPages] = useState(0);
   const [scale, setScale] = useState(1);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   function onLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
@@ -44,6 +45,14 @@ export default function ResumeViewer() {
     setScale((prev) =>
       Math.max(Number((prev - SCALE_STEP).toFixed(2)), MIN_SCALE)
     );
+  }
+
+  function handleWheel(e: WheelEvent<HTMLDivElement>) {
+    e.stopPropagation();
+  }
+
+  function handleTouchMove(e: TouchEvent<HTMLDivElement>) {
+    e.stopPropagation();
   }
 
   return (
@@ -70,9 +79,21 @@ export default function ResumeViewer() {
         initial="hidden"
         animate="show"
         transition={{ delay: 0.2 }}
-        className="mt-10 overflow-hidden rounded-2xl border border-border bg-card"
+        className="mt-10 flex flex-col overflow-hidden rounded-2xl border border-border bg-card"
       >
-        <div className="scrollbar-hide h-[70vh] sm:h-[80vh] overflow-y-auto bg-black/[0.045] dark:bg-white/[0.03]">
+        <div
+          ref={scrollRef}
+          data-lenis-prevent
+          data-scroll
+          data-scroll-independent
+          onWheel={handleWheel}
+          onTouchMove={handleTouchMove}
+          className="scrollbar-hide h-[70vh] min-h-0 sm:h-[80vh] overflow-y-auto overscroll-contain bg-black/[0.045] dark:bg-white/[0.03]"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            touchAction: "pan-y",
+          }}
+        >
           <div className="flex flex-col items-center gap-4 sm:gap-5 px-2 sm:px-4 py-4 sm:py-6">
             <Document
               file="/resume.pdf"
