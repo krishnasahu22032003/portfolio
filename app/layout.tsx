@@ -8,6 +8,7 @@ import Footer from "@/components/ui/Footer";
 import StructuredData from "@/components/StructuredData";
 import SmoothScroll from "@/components/ui/SmoothScroll ";
 import { ViewTransitions } from "next-view-transitions";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -113,7 +114,10 @@ export default function RootLayout({
         <ThemeProvider>
             <SmoothScroll />
          <Header/>
-          <main className="flex-1 px-4">{children}</main>
+          <main className="flex-1 px-4">
+            {children}
+<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID!}/>
+          </main>
           <Quotes/>
           <Footer/>
         </ThemeProvider>
