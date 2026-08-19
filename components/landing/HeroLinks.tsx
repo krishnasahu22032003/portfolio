@@ -1,5 +1,6 @@
 "use client"
 
+import { trackEvent } from "@/lib/analytics"
 import { motion } from "framer-motion"
 import { Mail } from "lucide-react"
 import { FaGithub , FaLinkedin } from "react-icons/fa6"
@@ -56,6 +57,11 @@ const HeroLinks = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
+       onClick={() => {
+              trackEvent("social_click", {
+                platform: label.toLowerCase(),
+              });
+            }}
             className="flex items-center justify-center p-1 text-muted-foreground/70 transition-colors duration-200 group-hover:text-foreground"
           >
             <Icon className="h-[18px] w-[18px]" />
