@@ -2,47 +2,92 @@
 
 import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
-import { GitHubCalendar } from "react-github-calendar"
 import { FaGithub } from "react-icons/fa6"
 
 const GITHUB_USERNAME = "krishnasahu22032003"
 
+type Contribution = {
+  date: string
+  count: number
+  weekday: number
+}
+
+type GithubResponse = {
+  success: boolean
+  total?: {
+    lastYear: number
+  }
+  contributions?: Contribution[]
+  error?: string
+}
+
+const calendarColors = {
+  light: [
+    "#ebedf0",
+    "#9be9a8",
+    "#40c463",
+    "#30a14e",
+    "#216e39",
+  ],
+  dark: [
+    "#161b22",
+    "#0e4429",
+    "#006d32",
+    "#26a641",
+    "#39d353",
+  ],
+}
+
 const sectionContainer = {
   hidden: {},
   show: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
   },
 }
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 16, filter: "blur(6px)" },
+  hidden: {
+    opacity: 0,
+    y: 16,
+    filter: "blur(6px)",
+  },
   show: {
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1] as const,
+    },
   },
 }
 
-const calendarTheme = {
-  light: ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"],
-  dark: ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"],
-}
-
 const useColorScheme = () => {
-  const [scheme, setScheme] = useState<"light" | "dark">("light")
+  const [scheme, setScheme] =
+    useState<"light" | "dark">("light")
 
   useEffect(() => {
     const root = document.documentElement
 
     const update = () => {
-      setScheme(root.classList.contains("dark") ? "dark" : "light")
+      setScheme(
+        root.classList.contains("dark")
+          ? "dark"
+          : "light"
+      )
     }
 
     update()
 
     const observer = new MutationObserver(update)
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] })
+
+    observer.observe(root, {
+      attributes: true,
+      attributeFilter: ["class"],
+    })
 
     return () => observer.disconnect()
   }, [])
@@ -50,21 +95,117 @@ const useColorScheme = () => {
   return scheme
 }
 
+const getLevel = (count: number) => {
+  if (count === 0) return 0
+  if (count <= 3) return 1
+  if (count <= 6) return 2
+  if (count <= 10) return 3
+  return 4
+}
+
 const GithubActivity = () => {
   const colorScheme = useColorScheme()
-  const [mounted, setMounted] = useState(false)
+
+  const [contributions, setContributions] =
+    useState<Contribution[]>([])
+
+  const [total, setTotal] = useState(0)
+
+  const [loading, setLoading] = useState(true)
+
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setMounted(true)
+    const loadContributions = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+
+        const response = await fetch(
+          "/api/github/contributions"
+        )
+
+        const data: GithubResponse =
+          await response.json()
+
+        if (!response.ok || !data.success) {
+          throw new Error(
+            data.error ||
+              "Failed to load GitHub contributions"
+          )
+        }
+
+        setContributions(
+          data.contributions ?? []
+        )
+
+        setTotal(
+          data.total?.lastYear ?? 0
+        )
+      } catch (error) {
+        console.error(
+          "GitHub contributions error:",
+          error
+        )
+
+        setError(
+          "Couldn't load GitHub activity right now."
+        )
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    loadContributions()
   }, [])
+
+  const colors =
+    colorScheme === "dark"
+      ? calendarColors.dark
+      : calendarColors.light
+
+  const weeks: Contribution[][] = []
+
+  let currentWeek: Contribution[] = []
+
+  contributions.forEach((day, index) => {
+    const isSunday =
+      day.weekday === 0
+
+    if (
+      index > 0 &&
+      isSunday &&
+      currentWeek.length > 0
+    ) {
+      weeks.push(currentWeek)
+      currentWeek = []
+    }
+
+    currentWeek.push(day)
+  })
+
+  if (currentWeek.length > 0) {
+    weeks.push(currentWeek)
+  }
 
   return (
     <section className="container mx-auto max-w-2xl py-8">
       <motion.h2
-        initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        initial={{
+          opacity: 0,
+          y: 14,
+          filter: "blur(6px)",
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+        }}
         viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        transition={{
+          duration: 0.8,
+          ease: [0.16, 1, 0.3, 1],
+        }}
         className="font-serif text-[clamp(2.25rem,7vw,2.2rem)] font-semibold italic leading-none tracking-tight text-foreground"
       >
         Proof of Work
@@ -74,15 +215,22 @@ const GithubActivity = () => {
         variants={sectionContainer}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{
+          once: true,
+          margin: "-80px",
+        }}
         className="mt-8 border-t border-border"
       >
-        <motion.div variants={fadeUp} className="border-b border-border py-6">
+        <motion.div
+          variants={fadeUp}
+          className="border-b border-border py-6"
+        >
           <div className="flex items-start justify-between gap-4">
             <div className="flex flex-col gap-0.5">
               <span className="text-[15px] font-semibold tracking-tight text-foreground">
                 GitHub Contributions
               </span>
+
               <span className="text-[12px] text-muted-foreground">
                 @{GITHUB_USERNAME}
               </span>
@@ -99,27 +247,105 @@ const GithubActivity = () => {
             </a>
           </div>
 
-          <div className="mt-5 -mx-1 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <div className="min-w-[640px]">
-              {mounted ? (
-                <GitHubCalendar
-                  username={GITHUB_USERNAME}
-                  colorScheme={colorScheme}
-                  theme={calendarTheme}
-                  blockSize={11}
-                  blockMargin={4}
-                  blockRadius={3}
-                  fontSize={12}
-                  showWeekdayLabels
-                  labels={{
-                    totalCount: "{{count}} contributions in the last year",
-                  }}
-                  errorMessage="Couldn't load GitHub activity right now."
-                />
-              ) : (
-                <div className="h-[112px] w-full animate-pulse rounded-lg bg-muted" />
+          {/* Calendar */}
+          <div className="mt-5 w-full">
+            {loading && (
+              <div className="flex justify-center">
+                <div className="flex gap-[3px]">
+                  {Array.from({
+                    length: 53,
+                  }).map((_, weekIndex) => (
+                    <div
+                      key={weekIndex}
+                      className="flex flex-col gap-[3px]"
+                    >
+                      {Array.from({
+                        length: 7,
+                      }).map((_, dayIndex) => (
+                        <div
+                          key={dayIndex}
+                          className="h-[2.5] w-[2.5] animate-pulse rounded-[2px] bg-muted"
+                        />
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {!loading && error && (
+              <div className="py-8 text-center text-sm text-muted-foreground">
+                {error}
+              </div>
+            )}
+
+            {!loading &&
+              !error &&
+              contributions.length > 0 && (
+                <>
+                  <div className="flex justify-center">
+                    <div className="flex gap-[3px]">
+                      {weeks.map(
+                        (week, weekIndex) => (
+                          <div
+                            key={weekIndex}
+                            className="flex flex-col gap-[3px]"
+                          >
+                            {week.map((day) => {
+                              const level =
+                                getLevel(
+                                  day.count
+                                )
+
+                              return (
+                                <div
+                                  key={day.date}
+                                  title={`${day.count} contributions on ${day.date}`}
+                                  className="h-[9px] w-[9px] rounded-[2px] transition-transform duration-150 hover:scale-125"
+                                  style={{
+                                    backgroundColor:
+                                      colors[level],
+                                  }}
+                                />
+                              )
+                            })}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-between">
+                    <span className="text-[11px] text-muted-foreground">
+                      {total.toLocaleString()}{" "}
+                      contributions in the last year
+                    </span>
+
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] text-muted-foreground">
+                        Less
+                      </span>
+
+                      {colors.map(
+                        (color, index) => (
+                          <span
+                            key={index}
+                            className="h-[9px] w-[9px] rounded-[2px]"
+                            style={{
+                              backgroundColor:
+                                color,
+                            }}
+                          />
+                        )
+                      )}
+
+                      <span className="text-[10px] text-muted-foreground">
+                        More
+                      </span>
+                    </div>
+                  </div>
+                </>
               )}
-            </div>
           </div>
         </motion.div>
       </motion.div>

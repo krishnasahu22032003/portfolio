@@ -2,61 +2,167 @@ import { NextResponse } from "next/server"
 
 const GITHUB_USERNAME = "krishnasahu22032003"
 
+const GITHUB_GRAPHQL_URL = "https://api.github.com/graphql"
+
+const query = `
+  query ContributionCalendar(
+    $username: String!
+    $from: DateTime!
+    $to: DateTime!
+  ) {
+    user(login: $username) {
+      contributionsCollection(from: $from, to: $to) {
+        contributionCalendar {
+          totalContributions
+
+          weeks {
+            contributionDays {
+              contributionCount
+              date
+              weekday
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
 export async function GET() {
   try {
-    const url =
-      `https://github-contributions-api.jogruber.de/v4/` +
-      `${GITHUB_USERNAME}?y=last`
+    const token = process.env.GITHUB_TOKEN
 
-    const response = await fetch(url, {
-      next: {
-        revalidate: 3600,
-      },
-    })
+    if (!token) {
+      console.error("GITHUB_TOKEN is missing")
+
+      return NextResponse.json(
+        {
+          success: false,
+          error: "GitHub token is not configured",
+        },
+        { status: 500 }
+      )
+    }
+
+    const now = new Date()
+
+    const from = new Date(now)
+
+    from.setUTCFullYear(
+      from.getUTCFullYear() - 1
+    )
+
+    const response = await fetch(
+      GITHUB_GRAPHQL_URL,
+      {
+        method: "POST",
+
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json",
+          "User-Agent": "Krishna-Portfolio",
+        },
+
+        body: JSON.stringify({
+          query,
+          variables: {
+            username: GITHUB_USERNAME,
+            from: from.toISOString(),
+            to: now.toISOString(),
+          },
+        }),
+
+        next: {
+          revalidate: 3600,
+        },
+      }
+    )
+
+    const result = await response.json()
 
     if (!response.ok) {
       console.error(
-        "Jogruber API failed:",
-        response.status,
-        response.statusText
+        "GitHub API error:",
+        result
       )
 
       return NextResponse.json(
         {
           success: false,
-          error: "Failed to fetch GitHub contributions",
+          error:
+            result?.message ||
+            "GitHub API request failed",
         },
-        { status: 502 }
+        { status: response.status }
       )
     }
 
-    const data = await response.json()
+    if (result.errors?.length) {
+      console.error(
+        "GitHub GraphQL errors:",
+        result.errors
+      )
 
-    return NextResponse.json(
-      {
-        success: true,
-        total: data.total,
-        contributions: data.contributions,
-      },
-      {
-        headers: {
-          "Cache-Control":
-            "public, s-maxage=3600, stale-while-revalidate=86400",
+      return NextResponse.json(
+        {
+          success: false,
+          error: result.errors[0]?.message,
         },
-      }
-    )
+        { status: 500 }
+      )
+    }
+
+    const calendar =
+      result.data?.user
+        ?.contributionsCollection
+        ?.contributionCalendar
+
+    if (!calendar) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "GitHub contribution calendar not found",
+        },
+        { status: 404 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      total: {
+        lastYear:
+          calendar.totalContributions,
+      },
+      contributions:
+        calendar.weeks.flatMap(
+          (week: any) =>
+            week.contributionDays.map(
+              (day: any) => ({
+                date: day.date,
+                count:
+                  day.contributionCount,
+                weekday: day.weekday,
+              })
+            )
+        ),
+    })
   } catch (error) {
     console.error(
-      "GitHub contributions proxy error:",
+      "GitHub contribution error:",
       error
     )
 
     return NextResponse.json(
       {
         success: false,
-        error: "Unable to fetch GitHub contributions",
+        error:
+          error instanceof Error
+            ? error.message
+            : "GitHub request failed",
       },
       { status: 500 }
     )
-  };
-};
+  }
+}
