@@ -3,7 +3,7 @@ export type WorkExperienceItem = {
   subtitle: string
   duration: string
   location: string
-  remote: boolean
+  current: boolean
   role: string
   points: string[][]
   tags: string[]
@@ -15,8 +15,8 @@ export const workExperience: WorkExperienceItem[] = [
     subtitle: "Carbon Crunch",
     duration: "Jul 2026 \u2013 Present",
     location: "Noida",
-    remote: false,
-    role: "Senior Software Engineer",
+    current: true,
+    role: "Software Engineer",
     points: [
       [
         "Architected and shipped an end-to-end internal monitoring platform from the ground up, cutting incident detection time by ",
@@ -75,7 +75,7 @@ export const workExperience: WorkExperienceItem[] = [
     subtitle: "Inlighn Tech",
     duration: "May 2025 \u2013 Jun 2026",
     location: "Remote",
-    remote: true,
+    current: false,
     role: "Full Stack Developer",
     points: [
       [

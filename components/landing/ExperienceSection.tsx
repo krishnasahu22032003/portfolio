@@ -57,7 +57,7 @@ const Experience = () => {
   if (!current) return null
 
   return (
-    <section className="container mx-auto max-w-2xl py-8">
+    <section className="container mx-auto max-w-2xl px-4 py-8 sm:px-0">
       <motion.h2
         initial={{ opacity: 0, y: 14, filter: "blur(6px)" }}
         whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -76,7 +76,7 @@ const Experience = () => {
         className="mt-8 border-t border-border"
       >
         <motion.div variants={fadeUp} className="border-b border-border py-6">
-          <div className="flex items-start justify-between gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="flex flex-col gap-0.5">
               <span className="text-[15px] font-semibold tracking-tight text-foreground">
                 {current.company}
@@ -86,13 +86,13 @@ const Experience = () => {
               </span>
             </div>
 
-            <div className="flex flex-col items-end gap-1 text-right">
+            <div className="flex flex-col gap-1 sm:items-end sm:text-right">
               <span className="text-[12px] text-muted-foreground">
                 {current.duration}
               </span>
               <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground">
                 {current.location}
-                {current.remote && (
+                {current.current && (
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                 )}
               </span>
@@ -178,7 +178,7 @@ const Experience = () => {
               href="/work"
               className="group relative block overflow-hidden border-b border-border py-6"
             >
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                 <div className="flex flex-col gap-0.5">
                   <span className="text-[15px] font-semibold tracking-tight text-foreground/70">
                     {preview.company}
@@ -188,13 +188,13 @@ const Experience = () => {
                   </span>
                 </div>
 
-                <div className="flex flex-col items-end gap-1 text-right">
+                <div className="flex flex-col gap-1 sm:items-end sm:text-right">
                   <span className="text-[12px] text-muted-foreground">
                     {preview.duration}
                   </span>
                   <span className="flex items-center gap-1.5 text-[11px] font-medium tracking-wide text-muted-foreground">
                     {preview.location}
-                    {preview.remote && (
+                    {preview.current && (
                       <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                     )}
                   </span>
@@ -229,11 +229,6 @@ const Experience = () => {
                 </ul>
 
                 <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-background via-background/90 to-transparent" />
-              </div>
-
-              <div className="mt-3 flex items-center gap-1.5 text-[12px] font-medium tracking-wide text-muted-foreground transition-colors duration-200 group-hover:text-foreground">
-                <ChevronDown className="h-3.5 w-3.5 -rotate-90" />
-                See full role
               </div>
             </Link>
           </motion.div>
