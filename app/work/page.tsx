@@ -146,6 +146,6 @@ const WorkPage = () => {
       </motion.div>
     </section>
   )
-}
+} ;
 
 export default WorkPage
