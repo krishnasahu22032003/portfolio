@@ -19,7 +19,7 @@ const paragraphs = [
     "I've built ",
     { highlight: "12+ production-grade products" },
     " and ",
-    { highlight: "10+ frontend projects" },
+    { highlight: "15+ frontend projects" },
     ", working across the stack from interface to infrastructure.",
   ],
   [
